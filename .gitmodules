@@ -1,0 +1,3 @@
+[submodule "Newt"]
+	path = Newt
+	url = https://github.com/Zaeiro/Newt
