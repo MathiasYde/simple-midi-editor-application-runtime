@@ -1,24 +1,26 @@
 #include <Newt.h>
 #include <Newt/Core/EntryPoint.h>
 
+#include "EditorLayer.h"
+
 namespace Newt {
 
-	class SMEAR : public Application
+	class app : public Application
 	{
 	public:
-		SMEAR(ApplicationCommandLineArgs args)
+		app(ApplicationCommandLineArgs args)
 			: Application(ApplicationSpecification{"SMEAR", "", args})
 		{
+			PushLayer(new SMEAR::EditorLayer());
 		}
 
-		~SMEAR()
+		~app()
 		{
 		}
 	};
 
 	Application* CreateApplication(ApplicationCommandLineArgs args)
 	{
-		return new SMEAR(args);
+		return new app(args);
 	}
-
 }
