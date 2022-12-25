@@ -1,4 +1,4 @@
-project "NewtApp"
+project "SMEAR"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"

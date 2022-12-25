@@ -1,9 +1,9 @@
 NEWT_DIR = "%{wks.location}/Newt"
 include "Newt/Dependencies.lua"
 
-workspace "NewtApp"
+workspace "SMEAR"
 	architecture "x86_64"
-	startproject "NewtApp"
+	startproject "SMEAR"
 
 	configurations
 	{
@@ -25,4 +25,4 @@ workspace "NewtApp"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 include "Newt/NewtExternal.lua"
-include "NewtApp"
+include "SMEAR"

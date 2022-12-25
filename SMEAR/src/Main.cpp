@@ -3,22 +3,22 @@
 
 namespace Newt {
 
-	class NewtApp : public Application
+	class SMEAR : public Application
 	{
 	public:
-		NewtApp(ApplicationCommandLineArgs args)
-			: Application("Newt App", args)
+		SMEAR(ApplicationCommandLineArgs args)
+			: Application(ApplicationSpecification{"SMEAR", "", args})
 		{
 		}
 
-		~NewtApp()
+		~SMEAR()
 		{
 		}
 	};
 
 	Application* CreateApplication(ApplicationCommandLineArgs args)
 	{
-		return new NewtApp(args);
+		return new SMEAR(args);
 	}
 
 }
