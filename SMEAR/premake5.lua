@@ -22,11 +22,20 @@ project "SMEAR"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.ImGuizmo}"
+		"%{wks.location}/SMEAR/vendor/libremidi/include",
 	}
 
 	links
 	{
 		"Newt"
+	links {
+		"Newt",
+		"winmm"
+	}
+
+	defines {
+		"LIBREMIDI_WINMM",
+		"LIBREMIDI_HEADER_ONLY",
 	}
 
 	filter "system:windows"

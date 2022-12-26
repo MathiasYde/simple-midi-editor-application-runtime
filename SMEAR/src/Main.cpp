@@ -1,6 +1,7 @@
 #include <Newt.h>
 #include <Newt/Core/EntryPoint.h>
 
+#include "CoreLayer.h"
 #include "EditorLayer.h"
 
 namespace Newt {
@@ -11,6 +12,7 @@ namespace Newt {
 		app(ApplicationCommandLineArgs args)
 			: Application(ApplicationSpecification{"SMEAR", "", args})
 		{
+			PushLayer(new SMEAR::CoreLayer());
 			PushLayer(new SMEAR::EditorLayer());
 		}
 

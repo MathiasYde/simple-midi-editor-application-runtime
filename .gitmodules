@@ -2,3 +2,6 @@
 	path = Newt
 	url = https://github.com/Zaeiro/Newt
 	branch = main
+[submodule "SMEAR/vendor/libremidi"]
+	path = SMEAR/vendor/libremidi
+	url = https://github.com/jcelerier/libremidi
