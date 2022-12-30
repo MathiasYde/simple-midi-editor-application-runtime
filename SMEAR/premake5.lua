@@ -23,6 +23,7 @@ project "SMEAR"
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.ImGuizmo}",
 		"%{wks.location}/SMEAR/vendor/libremidi/include",
+		"%{wks.location}/SMEAR/vendor/TinySoundFont",
 	}
 
 	links	{
