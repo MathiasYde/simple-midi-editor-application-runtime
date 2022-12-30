@@ -9,39 +9,73 @@
 #include "Constants.h"
 
 namespace SMEAR {
-	// https://github.com/shric/midi/blob/master/src/Piano.cpp
 	bool PianoPanel::IsBlackKey(uint8_t key) {
-		return (!((key - 1) % 7 == 0 || (key - 1) % 7 == 3) && key != 51);
+		int note = key % 12;
+		return note == 1 || note == 3 || note == 6 || note == 8 || note == 10;
 	}
 
 	// https://github.com/shric/midi/blob/master/src/Piano.cpp
 	void PianoPanel::OnImGuiRender() {
-		int keyWidth = 20;
-
+		ImGui::SetNextWindowSizeConstraints(ImVec2(300.0f, 160.0f), ImVec2(m_KeyWidth * m_NoteSpan, 160.0f));
 		ImGui::Begin("Piano");
 		ImVec2 cursorPosition = ImGui::GetCursorScreenPos();
 		ImDrawList* drawList = ImGui::GetWindowDrawList();
 
-		for (int i = 0; i < 61; i++) {
-			// TODO(mathias) implement a better system to retrieve color information
-			ImU32 color = PianoPanel::IsBlackKey(i) ? IM_COL32(0, 0, 0, 255) : IM_COL32(255, 255, 255, 255);
-			
-			if (m_KeyStates[i] == true)
-				// color = IM_COL32(255, 0, 0, 255) doesn't work for some reason
-				color = 0xFF0000FF;
+		{
+			// render white keys
+			int currentKey = m_StartingNote;
+			for (int i = 0; i < m_NoteSpan; i++) {
+				ImU32 color = IM_COL32_WHITE;
+				if (m_KeyStates[currentKey] == true) {
+					color = m_KeyHighlightColor;
+				}
 
-			drawList->AddRectFilled(
-				ImVec2(cursorPosition.x + i * keyWidth + keyWidth * 3 / 4, cursorPosition.y),
-				ImVec2(cursorPosition.x + i * keyWidth + keyWidth * 5 / 4 + 1, cursorPosition.y + 80),
-				color, 0, ImDrawCornerFlags_All);
+				drawList->AddRectFilled(
+					ImVec2(cursorPosition.x + i * m_KeyWidth, cursorPosition.y),
+					ImVec2(cursorPosition.x + i * m_KeyWidth + m_KeyWidth, cursorPosition.y + m_WhiteKeyHeight),
+					color, 0, ImDrawCornerFlags_All);
+				drawList->AddRect(
+					ImVec2(cursorPosition.x + i * m_KeyWidth, cursorPosition.y),
+					ImVec2(cursorPosition.x + i * m_KeyWidth + m_KeyWidth, cursorPosition.y + m_WhiteKeyHeight),
+					IM_COL32_BLACK, 0, ImDrawCornerFlags_All);
+
+				do {
+					currentKey += 1;
+				} while (IsBlackKey(currentKey));
+			}
+		}
+
+		{
+			// render black keys
+			int currentKey = m_StartingNote + 1;
+			for (int i = 0; i < m_NoteSpan; i++) {
+				if (!IsBlackKey(currentKey)) {
+					currentKey += 1;
+					continue;
+				}
+
+				ImU32 color = IM_COL32_BLACK;
+				if (m_KeyStates[currentKey] == true) {
+					color = m_KeyHighlightColor;
+				}
+
+				drawList->AddRectFilled(
+					ImVec2(cursorPosition.x + i * m_KeyWidth + m_KeyWidth * 3 / 4, cursorPosition.y),
+					ImVec2(cursorPosition.x + i * m_KeyWidth + m_KeyWidth * 5 / 4, cursorPosition.y + m_BlackKeyHeight),
+					color, 0, ImDrawCornerFlags_All);
+				drawList->AddRect(
+					ImVec2(cursorPosition.x + i * m_KeyWidth + m_KeyWidth * 3 / 4, cursorPosition.y),
+					ImVec2(cursorPosition.x + i * m_KeyWidth + m_KeyWidth * 5 / 4, cursorPosition.y + m_BlackKeyHeight),
+					IM_COL32_BLACK, 0, ImDrawCornerFlags_All);
+
+				currentKey += 2;
+			}
 		}
 
 		ImGui::End();
 	}
 
 	void PianoPanel::OnMidiNoteEvent(const MidiNoteEvent& midiNoteEvent) {
-		NT_INFO("MIDI note event received from PianoPianel");
-
 		switch (midiNoteEvent.command) {
 		case MIDI_NOTE_ON:
 			m_KeyStates[midiNoteEvent.pitch] = true;

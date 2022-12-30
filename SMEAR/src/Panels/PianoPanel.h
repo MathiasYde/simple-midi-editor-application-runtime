@@ -5,6 +5,15 @@ namespace SMEAR {
 	class PianoPanel : public Panel {
 	private:
 		bool m_KeyStates[256];
+		//int m_StartingNote = 36;
+		int m_StartingNote = 0;
+		int m_NoteSpan = 61;
+
+		int m_KeyWidth = 20;
+		int m_WhiteKeyHeight = 120;
+		int m_BlackKeyHeight = 80;
+
+		uint32_t m_KeyHighlightColor = 0xFF0000FF;
 
 	public:
 		PianoPanel() = default;
