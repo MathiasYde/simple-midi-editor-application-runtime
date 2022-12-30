@@ -42,7 +42,6 @@ namespace SMEAR {
 					command, channel, pitch, velocity
 					});
 
-				NT_INFO("MIDI, Note off: {0}, {1}", channel, pitch);
 				break;
 			}
 			case MIDI_NOTE_OFF: {
@@ -54,7 +53,6 @@ namespace SMEAR {
 					command, channel, pitch, velocity
 					});
 
-				NT_INFO("MIDI, Note off: {0}, {1}", channel, pitch);
 				break;
 			}
 			default:
