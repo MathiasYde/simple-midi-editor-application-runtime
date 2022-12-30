@@ -21,7 +21,7 @@ project "SMEAR"
 		"%{wks.location}/Newt/Newt/vendor",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.entt}",
-		"%{IncludeDir.ImGuizmo}"
+		"%{IncludeDir.ImGuizmo}",
 		"%{wks.location}/SMEAR/vendor/libremidi/include",
 	}
 
