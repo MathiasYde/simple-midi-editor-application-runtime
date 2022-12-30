@@ -1,12 +1,10 @@
 #pragma once
 
 #include "Newt.h"
-using namespace Newt;
-
 #include "libremidi/libremidi.hpp"
 
 namespace SMEAR {
-	class CoreLayer : public Layer {
+	class CoreLayer : public Newt::Layer {
 	private:
 		libremidi::midi_in m_MidiHandle;
 
@@ -15,6 +13,6 @@ namespace SMEAR {
 		virtual ~CoreLayer() = default;
 
 		virtual void OnAttach() override;
-		virtual void OnUpdate(TimeStep ts) override;
+		virtual void OnUpdate(Newt::TimeStep ts) override;
 	};
 }

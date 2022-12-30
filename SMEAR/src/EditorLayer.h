@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Newt.h"
-using namespace Newt;
+#include "Panels/Panel.h"
 
 namespace SMEAR {
-	class EditorLayer : public Layer {
+	class EditorLayer : public Newt::Layer {
 	private:
 		std::vector<Panel*> m_Panels;
 
@@ -16,7 +16,7 @@ namespace SMEAR {
 		virtual void OnDetach() override;
 
 		virtual void OnAwake() override;
-		virtual void OnUpdate(TimeStep ts) override;
+		virtual void OnUpdate(Newt::TimeStep ts) override;
 
 		virtual void OnImGuiRender() override;
 	};
