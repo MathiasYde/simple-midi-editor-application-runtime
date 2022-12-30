@@ -5,3 +5,6 @@
 [submodule "SMEAR/vendor/libremidi"]
 	path = SMEAR/vendor/libremidi
 	url = https://github.com/jcelerier/libremidi
+[submodule "SMEAR/vendor/TinySoundFont"]
+	path = SMEAR/vendor/TinySoundFont
+	url = https://github.com/schellingb/TinySoundFont
