@@ -1,12 +1,16 @@
 #include "CoreLayer.h"
-#include <libremidi/libremidi.hpp>
 
+#include <libremidi/libremidi.hpp>
 #include "spdlog/spdlog.h"
 #include <spdlog/fmt/bin_to_hex.h>
+
+#include "SmearApplication.h"
+
+#include "Events/Events.h"
 #include "Constants.h"
 
 namespace SMEAR {
-	CoreLayer::CoreLayer() : Layer("CoreLayer") {}
+	CoreLayer::CoreLayer() : Newt::Layer("CoreLayer") {}
 
 	void CoreLayer::OnAttach() {
 
@@ -24,7 +28,7 @@ namespace SMEAR {
 			});
 	}
 
-	void CoreLayer::OnUpdate(TimeStep ts) {
+	void CoreLayer::OnUpdate(Newt::TimeStep ts) {
 		libremidi::message message;
 		if (m_MidiHandle.get_message(message)) {
 			uint8_t command = message[0] & 0xF0;
@@ -34,6 +38,10 @@ namespace SMEAR {
 				uint8_t pitch = message[1] & 0x7F;
 				uint8_t velocity = message[2] & 0x7F;
 
+				SmearApplication::GetEventDispatcher()->trigger<MidiNoteEvent>({
+					command, channel, pitch, velocity
+					});
+
 				NT_INFO("MIDI, Note off: {0}, {1}", channel, pitch);
 				break;
 			}
@@ -41,6 +49,10 @@ namespace SMEAR {
 				uint8_t channel = message[0] & 0x0F;
 				uint8_t pitch = message[1] & 0x7F;
 				uint8_t velocity = message[2] & 0x7F;
+
+				SmearApplication::GetEventDispatcher()->trigger<MidiNoteEvent>({
+					command, channel, pitch, velocity
+					});
 
 				NT_INFO("MIDI, Note off: {0}, {1}", channel, pitch);
 				break;

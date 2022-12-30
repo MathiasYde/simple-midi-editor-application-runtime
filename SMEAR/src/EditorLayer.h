@@ -5,6 +5,9 @@ using namespace Newt;
 
 namespace SMEAR {
 	class EditorLayer : public Layer {
+	private:
+		std::vector<Panel*> m_Panels;
+
 	public:
 		EditorLayer();
 		virtual ~EditorLayer() = default;
