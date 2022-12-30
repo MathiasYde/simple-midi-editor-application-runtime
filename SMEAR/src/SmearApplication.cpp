@@ -1,7 +1,8 @@
 #include <Newt.h>
 
-#include "CoreLayer.h"
-#include "EditorLayer.h"
+#include "Layers/CoreLayer.h"
+#include "Layers/EditorLayer.h"
+#include "Layers/SynthesizeLayer.h"
 #include "SmearApplication.h"
 
 namespace SMEAR {

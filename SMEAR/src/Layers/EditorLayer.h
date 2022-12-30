@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Newt.h"
+
 #include "Panels/Panel.h"
 
 namespace SMEAR {

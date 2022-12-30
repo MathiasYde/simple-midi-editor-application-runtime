@@ -5,7 +5,7 @@
 
 #include "SmearApplication.h"
 #include "Events/Events.h"
-#include "CoreLayer.h"
+#include "Layers/CoreLayer.h"
 #include "Constants.h"
 
 namespace SMEAR {
