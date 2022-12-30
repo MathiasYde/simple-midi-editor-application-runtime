@@ -12,8 +12,11 @@ namespace SMEAR {
 		: Newt::Application(Newt::ApplicationSpecification{"SMEAR", "", args}) {
 		s_Instance = this;
 
+		// TODO(mathias) read the default configuration file and load modules accordingly
+
 		PushLayer(new SMEAR::CoreLayer());
 		PushLayer(new SMEAR::EditorLayer());
+		PushLayer(new SMEAR::SynthesizeLayer());
 	}
 
 	SmearApplication::~SmearApplication() {}
