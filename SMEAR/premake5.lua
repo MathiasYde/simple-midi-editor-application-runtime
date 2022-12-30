@@ -25,10 +25,7 @@ project "SMEAR"
 		"%{wks.location}/SMEAR/vendor/libremidi/include",
 	}
 
-	links
-	{
-		"Newt"
-	links {
+	links	{
 		"Newt",
 		"winmm"
 	}
