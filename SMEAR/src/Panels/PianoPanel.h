@@ -4,7 +4,7 @@
 namespace SMEAR {
 	class PianoPanel : public Panel {
 	private:
-		bool m_KeyStates[256];
+		uint8_t m_KeyStates[256];
 		int m_StartingNote = 36;
 		int m_NoteSpan = 61;
 

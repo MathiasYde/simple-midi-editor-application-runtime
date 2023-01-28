@@ -26,7 +26,7 @@ namespace SMEAR {
 			int currentKey = m_StartingNote;
 			for (int i = 0; i < m_NoteSpan; i++) {
 				ImU32 color = IM_COL32_WHITE;
-				if (m_KeyStates[currentKey] == true) {
+				if (m_KeyStates[currentKey] > 0) {
 					color = m_KeyHighlightColor;
 				}
 
@@ -55,7 +55,7 @@ namespace SMEAR {
 				}
 
 				ImU32 color = IM_COL32_BLACK;
-				if (m_KeyStates[currentKey] == true) {
+				if (m_KeyStates[currentKey] > 0) {
 					color = m_KeyHighlightColor;
 				}
 
@@ -78,10 +78,10 @@ namespace SMEAR {
 	void PianoPanel::OnMidiNoteEvent(const MidiNoteEvent& midiNoteEvent) {
 		switch (midiNoteEvent.command) {
 		case MIDI_NOTE_ON:
-			m_KeyStates[midiNoteEvent.pitch] = true;
+			m_KeyStates[midiNoteEvent.pitch] = midiNoteEvent.velocity;
 			break;
 		case MIDI_NOTE_OFF:
-			m_KeyStates[midiNoteEvent.pitch] = false;
+			m_KeyStates[midiNoteEvent.pitch] = 0;
 			break;
 		default:
 			break;
