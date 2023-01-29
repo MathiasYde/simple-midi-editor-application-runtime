@@ -8,16 +8,55 @@
 #include "Layers/CoreLayer.h"
 #include "Constants.h"
 
+#include <algorithm>
+
+#define IMGUI_INPUTINT(label, field, min, max) if (ImGui::InputInt(label, &field, 1, 1)) { field = std::clamp(field, min, max); }
+
 namespace SMEAR {
 	bool PianoPanel::IsBlackKey(uint8_t key) {
 		int note = key % 12;
 		return note == 1 || note == 3 || note == 6 || note == 8 || note == 10;
 	}
 
+	void PianoPanel::DrawConfigMenu() {
+		// TODO: ImGui::Columns doesn't seem to respect these constraints
+		ImGui::SetNextWindowSizeConstraints(
+			ImVec2(100.0f, -1),
+			ImVec2(240.0f, -1)
+		);
+
+		ImGui::BeginChild("Piano Panel Config");
+
+		if (ImGui::Button("Reset to defaults")) {
+			m_MidiChannel = 0;
+			m_NoteSpan = 61;
+			m_StartingNote = 36;
+		}
+
+		IMGUI_INPUTINT("Channel", m_MidiChannel, 0, 15);
+		IMGUI_INPUTINT("Span", m_NoteSpan, 0, 255);
+		IMGUI_INPUTINT("Starting note", m_StartingNote, 0, 255);
+
+		ImGui::EndChild();
+	}
+
 	// https://github.com/shric/midi/blob/master/src/Piano.cpp
 	void PianoPanel::OnImGuiRender() {
-		ImGui::SetNextWindowSizeConstraints(ImVec2(300.0f, 160.0f), ImVec2(m_KeyWidth * m_NoteSpan, 160.0f));
+		// TODO: this window still need a bit more of vertical padding
+		float frameHeight = ImGui::GetFrameHeightWithSpacing();
+
+		ImGui::SetNextWindowSizeConstraints(
+			ImVec2(300.0f, m_WhiteKeyHeight + frameHeight),
+			ImVec2(m_KeyWidth * m_NoteSpan, m_WhiteKeyHeight + frameHeight)
+		);
+
 		ImGui::Begin("Piano");
+		ImGui::Columns(2);
+
+		DrawConfigMenu();
+
+		ImGui::NextColumn();
+
 		ImVec2 cursorPosition = ImGui::GetCursorScreenPos();
 		ImDrawList* drawList = ImGui::GetWindowDrawList();
 
@@ -76,6 +115,8 @@ namespace SMEAR {
 	}
 
 	void PianoPanel::OnMidiNoteEvent(const MidiNoteEvent& midiNoteEvent) {
+		if (midiNoteEvent.channel != m_MidiChannel) { return; }
+
 		switch (midiNoteEvent.command) {
 		case MIDI_NOTE_ON:
 			m_KeyStates[midiNoteEvent.pitch] = midiNoteEvent.velocity;

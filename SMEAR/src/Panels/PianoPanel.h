@@ -14,6 +14,10 @@ namespace SMEAR {
 
 		uint32_t m_KeyHighlightColor = 0xFF0000FF;
 
+		int m_MidiChannel = 0x00;
+
+		void DrawConfigMenu();
+
 	public:
 		PianoPanel() = default;
 
