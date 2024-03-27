@@ -13,13 +13,13 @@ namespace SMEAR {
 	CoreLayer::CoreLayer() : Newt::Layer("CoreLayer") {}
 
 	void CoreLayer::OnAttach() {
-
 		NT_INFO("MIDI - {0} available ports", m_MidiHandle.get_port_count());
 		for (int i = 0; i < m_MidiHandle.get_port_count(); i++) {
 			std::string name = m_MidiHandle.get_port_name(i);
 			NT_INFO("[{0}] {1}", i, name);
 		}
 
+		// debug
 		m_MidiHandle.open_port(0);
 
 		m_MidiHandle.set_error_callback(
@@ -57,7 +57,7 @@ namespace SMEAR {
 			}
 			default:
 				NT_WARN("Invalid MIDI command: {0}", command);
-			}			
+			}
 		}
 	}
 }

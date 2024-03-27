@@ -3,6 +3,7 @@
 #include <string>
 
 #include "Newt.h"
+#include "Newt/Core/Timer.h"
 
 struct MidiNoteEvent;
 struct tsf;
@@ -15,6 +16,7 @@ namespace SMEAR {
 		unsigned int m_SampleRate = 44100;
 		unsigned int m_BufferSize = 512;
 		short m_AudioBuffer[512];
+		Newt::Timer m_BufferTimer;
 
 	public:
 		SynthesizeLayer();
